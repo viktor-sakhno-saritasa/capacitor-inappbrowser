@@ -246,7 +246,11 @@ public class WebViewDialog extends Dialog {
           WebView view,
           WebResourceRequest request
         ) {
-            return (request.getUrl().toString().indexOf("logout=1") > -1);
+            if (request.isRedirect()) {
+              _options.getCallbacks().urlChangeEvent(request.getUrl().toString());
+            }
+
+            return false;
         }
 
         @Override
