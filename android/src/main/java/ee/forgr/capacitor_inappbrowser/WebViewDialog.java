@@ -246,8 +246,8 @@ public class WebViewDialog extends Dialog {
           WebView view,
           WebResourceRequest request
         ) {
-            view.loadUrl(request.getUrl().toString());
-            return true;
+            Log.i(TAG, "shouldOverrideUrlLoading() URL : " + url);
+            return (request.getUrl().toString().indexOf("logout=1") > -1);
         }
 
         @Override
