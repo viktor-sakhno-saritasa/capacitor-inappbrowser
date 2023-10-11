@@ -246,7 +246,8 @@ public class WebViewDialog extends Dialog {
           WebView view,
           WebResourceRequest request
         ) {
-          return false;
+            view.loadUrl(request.getUrl().toString());
+            return true;
         }
 
         @Override
