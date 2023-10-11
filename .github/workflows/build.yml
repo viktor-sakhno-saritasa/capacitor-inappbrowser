@@ -77,8 +77,10 @@ jobs:
         if: ${{ !contains(github.ref, '-alpha.') }}
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          access: public
       - uses: rxfork/npm-publish@v1
         if: ${{ contains(github.ref, '-alpha.') }}
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          access: public
           tag: next
