@@ -27,6 +27,7 @@ InAppBrowser.open("YOUR_URL");
 * [`clearCookies()`](#clearcookies)
 * [`close()`](#close)
 * [`openWebView(...)`](#openwebview)
+* [`openWebViewWithHTML(...)`](#openwebviewwithhtml)
 * [`setUrl(...)`](#seturl)
 * [`addListener('urlChangeEvent', ...)`](#addlistenerurlchangeevent)
 * [`addListener('closeEvent', ...)`](#addlistenercloseevent)
@@ -90,7 +91,7 @@ close() => Promise<any>
 ### openWebView(...)
 
 ```typescript
-openWebView(options: OpenWebViewOptions) => Promise<any>
+openWebView(options: OpenWebViewOptionsWithUrl) => Promise<any>
 ```
 
 Open url in a new webview with toolbars
@@ -102,6 +103,23 @@ Open url in a new webview with toolbars
 **Returns:** <code>Promise&lt;any&gt;</code>
 
 **Since:** 0.1.0
+
+--------------------
+
+### openWebViewWithHTML(...)
+
+```typescript
+openWebViewWithHTML(options: OpenWebViewOptionsWithHtmlString) => Promise<any>
+```
+
+Open HTML in a new webview with toolbars
+
+| Param         | Type                                                              |
+| ------------- | ----------------------------------------------------------------- |
+| **`options`** | <code><a href="#openwebviewoptions">OpenWebViewOptions</a></code> |
+
+**Returns:** <code>Promise&lt;any&gt;</code>
+
 
 --------------------
 
@@ -230,6 +248,7 @@ Reload the current web page.
 | Prop                         | Type                                                            | Description                                                                                                                                                                       | Default                                                    | Since  |
 | ---------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------ |
 | **`url`**                    | <code>string</code>                                             | Target URL to load.                                                                                                                                                               |                                                            | 0.1.0  |
+| **`htmlString`**             | <code>string</code>                                             | HTML string to load. (excludes url)                                                                                                                                               |                                                            | 0.1.0  |
 | **`headers`**                | <code><a href="#headers">Headers</a></code>                     | <a href="#headers">Headers</a> to send with the request.                                                                                                                          |                                                            | 0.1.0  |
 | **`shareDisclaimer`**        | <code><a href="#disclaimeroptions">DisclaimerOptions</a></code> | share options                                                                                                                                                                     |                                                            | 0.1.0  |
 | **`toolbarType`**            | <code><a href="#toolbartype">ToolBarType</a></code>             | Toolbar type                                                                                                                                                                      | <code>ToolBarType.DEFAULT</code>                           | 0.1.0  |

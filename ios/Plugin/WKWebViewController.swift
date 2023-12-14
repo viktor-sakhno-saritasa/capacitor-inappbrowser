@@ -67,6 +67,13 @@ open class WKWebViewController: UIViewController {
         self.initWebview()
     }
 
+    public init(htmlString: String, headers: [String: String]) {
+        super.init(nibName: nil, bundle: nil)
+        self.source = .string(htmlString, base: nil)
+        self.setHeaders(headers: headers)
+        self.initWebview()
+    }
+
     open var hasDynamicTitle = false
     open var source: WKWebSource?
     /// use `source` instead

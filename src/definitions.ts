@@ -61,116 +61,128 @@ export interface DisclaimerOptions {
   cancelBtn: string;
 }
 
-export interface OpenWebViewOptions {
+interface OpenWebViewBaseOptions {
+    /**
+     * Headers to send with the request.
+     * @since 0.1.0
+    */
+    headers?: Headers;
+    /**
+     * share options
+     * @since 0.1.0
+     */
+    shareDisclaimer?: DisclaimerOptions;
+    /**
+     * Toolbar type
+     * @since 0.1.0
+     * @default ToolBarType.DEFAULT
+     */
+    toolbarType?: ToolBarType;
+    /**
+     * Share subject
+     * @since 0.1.0
+     */
+    shareSubject?: string;
+    /**
+     * Title of the browser
+     * @since 0.1.0
+     * @default 'New Window'
+     */
+    title: string;
+    /**
+     * Background color of the browser, only on IOS
+     * @since 0.1.0
+     * @default BackgroundColor.BLACK
+     */
+    backgroundColor?: BackgroundColor;
+    /**
+     * Open url in a new window fullscreen
+     *
+     * isPresentAfterPageLoad: if true, the browser will be presented after the page is loaded, if false, the browser will be presented immediately.
+     * @since 0.1.0
+     * @default false
+     */
+    isPresentAfterPageLoad?: boolean;
+    /**
+     * Shows a reload button that reloads the web page
+     * @since 1.0.15
+     * @default false
+     */
+    showReloadButton?: boolean;
+    /**
+     * CloseModal: if true a confirm will be displayed when user clicks on close button, if false the browser will be closed immediately.
+     *
+     * @since 1.1.0
+     * @default false
+     */
+    closeModal?: boolean;
+    /**
+     * CloseModalTitle: title of the confirm when user clicks on close button, only on IOS
+     *
+     * @since 1.1.0
+     * @default 'Close'
+     */
+    closeModalTitle?: string;
+    /**
+     * CloseModalDescription: description of the confirm when user clicks on close button, only on IOS
+     *
+     * @since 1.1.0
+     * @default 'Are you sure you want to close this window?'
+     */
+    closeModalDescription?: string;
+    /**
+     * CloseModalOk: text of the confirm button when user clicks on close button, only on IOS
+     *
+     * @since 1.1.0
+     * @default 'Close'
+     */
+    closeModalOk?: string;
+    /**
+     * CloseModalCancel: text of the cancel button when user clicks on close button, only on IOS
+     *
+     * @since 1.1.0
+     * @default 'Cancel'
+     */
+    closeModalCancel?: string;
+    /**
+     * visibleTitle: if true the website title would be shown else shown empty
+     *
+     * @since 1.2.5
+     * @default true
+     */
+    visibleTitle?: boolean;
+    /**
+     * toolbarColor: color of the toolbar in hex format
+     *
+     * @since 1.2.5
+     * @default '#ffffff''
+     */
+    toolbarColor?: string;
+    /**
+     * showArrow: if true an arrow would be shown instead of cross for closing the window
+     *
+     * @since 1.2.5
+     * @default false
+     */
+    showArrow?: boolean;
+}
+
+export type OpenWebViewOptionsWithUrl = OpenWebViewBaseOptions & {
   /**
    * Target URL to load.
    * @since 0.1.0
-   */
+  */
   url: string;
+};
+
+export type OpenWebViewOptionsWithHtmlString = OpenWebViewBaseOptions & {
   /**
-   * Headers to send with the request.
-   * @since 0.1.0
+   * HTML string to load as an alternative to `url`.
    */
-  headers?: Headers;
-  /**
-   * share options
-   * @since 0.1.0
-   */
-  shareDisclaimer?: DisclaimerOptions;
-  /**
-   * Toolbar type
-   * @since 0.1.0
-   * @default ToolBarType.DEFAULT
-   */
-  toolbarType?: ToolBarType;
-  /**
-   * Share subject
-   * @since 0.1.0
-   */
-  shareSubject?: string;
-  /**
-   * Title of the browser
-   * @since 0.1.0
-   * @default 'New Window'
-   */
-  title: string;
-  /**
-   * Background color of the browser, only on IOS
-   * @since 0.1.0
-   * @default BackgroundColor.BLACK
-   */
-  backgroundColor?: BackgroundColor;
-  /**
-   * Open url in a new window fullscreen
-   *
-   * isPresentAfterPageLoad: if true, the browser will be presented after the page is loaded, if false, the browser will be presented immediately.
-   * @since 0.1.0
-   * @default false
-   */
-  isPresentAfterPageLoad?: boolean;
-  /**
-   * Shows a reload button that reloads the web page
-   * @since 1.0.15
-   * @default false
-   */
-  showReloadButton?: boolean;
-  /**
-   * CloseModal: if true a confirm will be displayed when user clicks on close button, if false the browser will be closed immediately.
-   *
-   * @since 1.1.0
-   * @default false
-   */
-  closeModal?: boolean;
-  /**
-   * CloseModalTitle: title of the confirm when user clicks on close button, only on IOS
-   *
-   * @since 1.1.0
-   * @default 'Close'
-   */
-  closeModalTitle?: string;
-  /**
-   * CloseModalDescription: description of the confirm when user clicks on close button, only on IOS
-   *
-   * @since 1.1.0
-   * @default 'Are you sure you want to close this window?'
-   */
-  closeModalDescription?: string;
-  /**
-   * CloseModalOk: text of the confirm button when user clicks on close button, only on IOS
-   *
-   * @since 1.1.0
-   * @default 'Close'
-   */
-  closeModalOk?: string;
-  /**
-   * CloseModalCancel: text of the cancel button when user clicks on close button, only on IOS
-   *
-   * @since 1.1.0
-   * @default 'Cancel'
-   */
-  closeModalCancel?: string;
-  /**
-   * visibleTitle: if true the website title would be shown else shown empty
-   *
-   * @since 1.2.5
-   * @default true
-   */
-  visibleTitle?: boolean;
-  /**
-   * toolbarColor: color of the toolbar in hex format
-   *
-   * @since 1.2.5
-   * @default '#ffffff''
-   */
-  toolbarColor?: string;
-  /**
-   * showArrow: if true an arrow would be shown instead of cross for closing the window
-   *
-   * @since 1.2.5
-   * @default false
-   */
-  showArrow?: boolean;
-}
+  htmlString: string;
+};
+
+export type OpenWebViewOptions = OpenWebViewOptionsWithUrl | OpenWebViewOptionsWithHtmlString;
 
 export interface InAppBrowserPlugin {
   /**

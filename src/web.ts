@@ -2,8 +2,9 @@ import { WebPlugin } from "@capacitor/core";
 
 import type {
   InAppBrowserPlugin,
-  OpenWebViewOptions,
   OpenOptions,
+  OpenWebViewOptionsWithUrl,
+  OpenWebViewOptionsWithHtmlString,
 } from "./definitions";
 
 export class InAppBrowserWeb extends WebPlugin implements InAppBrowserPlugin {
@@ -17,8 +18,13 @@ export class InAppBrowserWeb extends WebPlugin implements InAppBrowserPlugin {
     return;
   }
 
-  async openWebView(options: OpenWebViewOptions): Promise<any> {
+  async openWebView(options: OpenWebViewOptionsWithUrl): Promise<any> {
     console.log("openWebView", options);
+    return options;
+  }
+
+  async openWebViewWithHTML(options: OpenWebViewOptionsWithHtmlString): Promise<any> {
+    console.log("openWebViewWithHTML", options);
     return options;
   }
 
