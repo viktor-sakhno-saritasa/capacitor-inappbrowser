@@ -200,11 +200,16 @@ export interface InAppBrowserPlugin {
   clearCookies(): Promise<any>;
   close(): Promise<any>;
   /**
+   * Open webview with given html string.
+   * @param options WebView options
+   */
+  openWebViewWithHTML(options: OpenWebViewOptionsWithHtmlString): Promise<any>;
+  /**
    * Open url in a new webview with toolbars
    *
    * @since 0.1.0
    */
-  openWebView(options: OpenWebViewOptions): Promise<any>;
+  openWebView(options: OpenWebViewOptionsWithUrl): Promise<any>;
   setUrl(options: { url: string }): Promise<any>;
   /**
    * Listen for url change, only for openWebView
