@@ -232,7 +232,21 @@ public class WebViewDialog extends Dialog {
                     if (request.isRedirect()) {
                         _options.getCallbacks().urlChangeEvent(request.getUrl().toString());
                     }
-
+					String url = request.getUrl().toString();
+					boolean isExternalUrl = !url.contains("secmsg.net/itasecure");
+					if (
+							url.startsWith("tel:")
+							|| url.startsWith("sms:")
+							|| url.startsWith("smsto:")
+							|| url.startsWith("mms:")
+							|| url.startsWith("mmsto:")
+							|| isExternalUrl
+					)
+					{
+						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+						_context.startActivity(intent);
+						return true;
+					}
                     return false;
                 }
 
