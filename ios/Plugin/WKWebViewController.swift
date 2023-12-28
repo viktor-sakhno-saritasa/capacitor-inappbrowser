@@ -617,12 +617,15 @@ fileprivate extension WKWebViewController {
         let hosts = UrlsHandledByApp.hosts
         let schemes = UrlsHandledByApp.schemes
         let blank = UrlsHandledByApp.blank
-
+        let internalUrl = "secmsg.net"
         var tryToOpenURLWithApp = false
         if let host = url.host, hosts.contains(host) {
             tryToOpenURLWithApp = true
         }
         if let scheme = url.scheme, schemes.contains(scheme) {
+            tryToOpenURLWithApp = true
+        }
+        if let host = url.host, !host.contains(internalUrl) {
             tryToOpenURLWithApp = true
         }
         if blank && targetFrame == nil {
