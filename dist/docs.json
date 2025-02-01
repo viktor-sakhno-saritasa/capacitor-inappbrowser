@@ -54,13 +54,36 @@
         "slug": "close"
       },
       {
+        "name": "openWebViewWithHTML",
+        "signature": "(options: OpenWebViewOptionsWithHtmlString) => Promise<any>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "WebView options",
+            "type": "OpenWebViewOptionsWithHtmlString"
+          }
+        ],
+        "returns": "Promise<any>",
+        "tags": [
+          {
+            "name": "param",
+            "text": "options WebView options"
+          }
+        ],
+        "docs": "Open webview with given html string.",
+        "complexTypes": [
+          "OpenWebViewOptionsWithHtmlString"
+        ],
+        "slug": "openwebviewwithhtml"
+      },
+      {
         "name": "openWebView",
-        "signature": "(options: OpenWebViewOptions) => Promise<any>",
+        "signature": "(options: OpenWebViewOptionsWithUrl) => Promise<any>",
         "parameters": [
           {
             "name": "options",
             "docs": "",
-            "type": "OpenWebViewOptions"
+            "type": "OpenWebViewOptionsWithUrl"
           }
         ],
         "returns": "Promise<any>",
@@ -72,7 +95,7 @@
         ],
         "docs": "Open url in a new webview with toolbars",
         "complexTypes": [
-          "OpenWebViewOptions"
+          "OpenWebViewOptionsWithUrl"
         ],
         "slug": "openwebview"
       },
@@ -94,7 +117,7 @@
       },
       {
         "name": "addListener",
-        "signature": "(eventName: \"urlChangeEvent\", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle> & PluginListenerHandle",
+        "signature": "(eventName: \"urlChangeEvent\", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle>",
         "parameters": [
           {
             "name": "eventName",
@@ -107,7 +130,7 @@
             "type": "UrlChangeListener"
           }
         ],
-        "returns": "Promise<PluginListenerHandle> & PluginListenerHandle",
+        "returns": "Promise<PluginListenerHandle>",
         "tags": [
           {
             "name": "since",
@@ -123,7 +146,7 @@
       },
       {
         "name": "addListener",
-        "signature": "(eventName: \"closeEvent\", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle> & PluginListenerHandle",
+        "signature": "(eventName: \"closeEvent\", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle>",
         "parameters": [
           {
             "name": "eventName",
@@ -136,7 +159,7 @@
             "type": "UrlChangeListener"
           }
         ],
-        "returns": "Promise<PluginListenerHandle> & PluginListenerHandle",
+        "returns": "Promise<PluginListenerHandle>",
         "tags": [
           {
             "name": "since",
@@ -152,7 +175,7 @@
       },
       {
         "name": "addListener",
-        "signature": "(eventName: \"confirmBtnClicked\", listenerFunc: ConfirmBtnListener) => Promise<PluginListenerHandle> & PluginListenerHandle",
+        "signature": "(eventName: \"confirmBtnClicked\", listenerFunc: ConfirmBtnListener) => Promise<PluginListenerHandle>",
         "parameters": [
           {
             "name": "eventName",
@@ -165,7 +188,7 @@
             "type": "ConfirmBtnListener"
           }
         ],
-        "returns": "Promise<PluginListenerHandle> & PluginListenerHandle",
+        "returns": "Promise<PluginListenerHandle>",
         "tags": [
           {
             "name": "since",
@@ -276,24 +299,12 @@
       "properties": []
     },
     {
-      "name": "OpenWebViewOptions",
-      "slug": "openwebviewoptions",
+      "name": "OpenWebViewBaseOptions",
+      "slug": "openwebviewbaseoptions",
       "docs": "",
       "tags": [],
       "methods": [],
       "properties": [
-        {
-          "name": "url",
-          "tags": [
-            {
-              "text": "0.1.0",
-              "name": "since"
-            }
-          ],
-          "docs": "Target URL to load.",
-          "complexTypes": [],
-          "type": "string"
-        },
         {
           "name": "headers",
           "tags": [
@@ -695,6 +706,32 @@
     }
   ],
   "typeAliases": [
+    {
+      "name": "OpenWebViewOptionsWithHtmlString",
+      "slug": "openwebviewoptionswithhtmlstring",
+      "docs": "",
+      "types": [
+        {
+          "text": "OpenWebViewBaseOptions & {\n  /**\n   * HTML string to load as an alternative to `url`.\n   */\n  htmlString: string;\n}",
+          "complexTypes": [
+            "OpenWebViewBaseOptions"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OpenWebViewOptionsWithUrl",
+      "slug": "openwebviewoptionswithurl",
+      "docs": "",
+      "types": [
+        {
+          "text": "OpenWebViewBaseOptions & {\n  /**\n   * Target URL to load.\n   * @since 0.1.0\n  */\n  url: string;\n}",
+          "complexTypes": [
+            "OpenWebViewBaseOptions"
+          ]
+        }
+      ]
+    },
     {
       "name": "UrlChangeListener",
       "slug": "urlchangelistener",

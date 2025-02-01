@@ -219,7 +219,7 @@ export interface InAppBrowserPlugin {
   addListener(
     eventName: "urlChangeEvent",
     listenerFunc: UrlChangeListener
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   /**
    * Listen for close click only for openWebView
@@ -229,7 +229,7 @@ export interface InAppBrowserPlugin {
   addListener(
     eventName: "closeEvent",
     listenerFunc: UrlChangeListener
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   /**
    * Will be triggered when user clicks on confirm button when disclaimer is required, works only on iOS
    *
@@ -238,7 +238,7 @@ export interface InAppBrowserPlugin {
   addListener(
     eventName: "confirmBtnClicked",
     listenerFunc: ConfirmBtnListener
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   /**
    * Remove all listeners for this plugin.

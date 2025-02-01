@@ -26,8 +26,8 @@ InAppBrowser.open("YOUR_URL");
 * [`open(...)`](#open)
 * [`clearCookies()`](#clearcookies)
 * [`close()`](#close)
-* [`openWebView(...)`](#openwebview)
 * [`openWebViewWithHTML(...)`](#openwebviewwithhtml)
+* [`openWebView(...)`](#openwebview)
 * [`setUrl(...)`](#seturl)
 * [`addListener('urlChangeEvent', ...)`](#addlistenerurlchangeevent)
 * [`addListener('closeEvent', ...)`](#addlistenercloseevent)
@@ -88,6 +88,23 @@ close() => Promise<any>
 --------------------
 
 
+### openWebViewWithHTML(...)
+
+```typescript
+openWebViewWithHTML(options: OpenWebViewOptionsWithHtmlString) => Promise<any>
+```
+
+Open webview with given html string.
+
+| Param         | Type                                                                                          | Description     |
+| ------------- | --------------------------------------------------------------------------------------------- | --------------- |
+| **`options`** | <code><a href="#openwebviewoptionswithhtmlstring">OpenWebViewOptionsWithHtmlString</a></code> | WebView options |
+
+**Returns:** <code>Promise&lt;any&gt;</code>
+
+--------------------
+
+
 ### openWebView(...)
 
 ```typescript
@@ -96,30 +113,13 @@ openWebView(options: OpenWebViewOptionsWithUrl) => Promise<any>
 
 Open url in a new webview with toolbars
 
-| Param         | Type                                                              |
-| ------------- | ----------------------------------------------------------------- |
-| **`options`** | <code><a href="#openwebviewoptions">OpenWebViewOptions</a></code> |
+| Param         | Type                                                                            |
+| ------------- | ------------------------------------------------------------------------------- |
+| **`options`** | <code><a href="#openwebviewoptionswithurl">OpenWebViewOptionsWithUrl</a></code> |
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
 **Since:** 0.1.0
-
---------------------
-
-### openWebViewWithHTML(...)
-
-```typescript
-openWebViewWithHTML(options: OpenWebViewOptionsWithHtmlString) => Promise<any>
-```
-
-Open HTML in a new webview with toolbars
-
-| Param         | Type                                                              |
-| ------------- | ----------------------------------------------------------------- |
-| **`options`** | <code><a href="#openwebviewoptions">OpenWebViewOptions</a></code> |
-
-**Returns:** <code>Promise&lt;any&gt;</code>
-
 
 --------------------
 
@@ -142,7 +142,7 @@ setUrl(options: { url: string; }) => Promise<any>
 ### addListener('urlChangeEvent', ...)
 
 ```typescript
-addListener(eventName: "urlChangeEvent", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: "urlChangeEvent", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle>
 ```
 
 Listen for url change, only for openWebView
@@ -152,7 +152,7 @@ Listen for url change, only for openWebView
 | **`eventName`**    | <code>'urlChangeEvent'</code>                                   |
 | **`listenerFunc`** | <code><a href="#urlchangelistener">UrlChangeListener</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -162,7 +162,7 @@ Listen for url change, only for openWebView
 ### addListener('closeEvent', ...)
 
 ```typescript
-addListener(eventName: "closeEvent", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: "closeEvent", listenerFunc: UrlChangeListener) => Promise<PluginListenerHandle>
 ```
 
 Listen for close click only for openWebView
@@ -172,7 +172,7 @@ Listen for close click only for openWebView
 | **`eventName`**    | <code>'closeEvent'</code>                                       |
 | **`listenerFunc`** | <code><a href="#urlchangelistener">UrlChangeListener</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.4.0
 
@@ -182,7 +182,7 @@ Listen for close click only for openWebView
 ### addListener('confirmBtnClicked', ...)
 
 ```typescript
-addListener(eventName: "confirmBtnClicked", listenerFunc: ConfirmBtnListener) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: "confirmBtnClicked", listenerFunc: ConfirmBtnListener) => Promise<PluginListenerHandle>
 ```
 
 Will be triggered when user clicks on confirm button when disclaimer is required, works only on iOS
@@ -192,7 +192,7 @@ Will be triggered when user clicks on confirm button when disclaimer is required
 | **`eventName`**    | <code>'confirmBtnClicked'</code>                                  |
 | **`listenerFunc`** | <code><a href="#confirmbtnlistener">ConfirmBtnListener</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 **Since:** 0.0.1
 
@@ -243,12 +243,10 @@ Reload the current web page.
 #### Headers
 
 
-#### OpenWebViewOptions
+#### OpenWebViewBaseOptions
 
 | Prop                         | Type                                                            | Description                                                                                                                                                                       | Default                                                    | Since  |
 | ---------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------ |
-| **`url`**                    | <code>string</code>                                             | Target URL to load.                                                                                                                                                               |                                                            | 0.1.0  |
-| **`htmlString`**             | <code>string</code>                                             | HTML string to load. (excludes url)                                                                                                                                               |                                                            | 0.1.0  |
 | **`headers`**                | <code><a href="#headers">Headers</a></code>                     | <a href="#headers">Headers</a> to send with the request.                                                                                                                          |                                                            | 0.1.0  |
 | **`shareDisclaimer`**        | <code><a href="#disclaimeroptions">DisclaimerOptions</a></code> | share options                                                                                                                                                                     |                                                            | 0.1.0  |
 | **`toolbarType`**            | <code><a href="#toolbartype">ToolBarType</a></code>             | Toolbar type                                                                                                                                                                      | <code>ToolBarType.DEFAULT</code>                           | 0.1.0  |
@@ -299,6 +297,16 @@ Reload the current web page.
 
 
 ### Type Aliases
+
+
+#### OpenWebViewOptionsWithHtmlString
+
+<code><a href="#openwebviewbaseoptions">OpenWebViewBaseOptions</a> & { /** * HTML string to load as an alternative to `url`. */ htmlString: string; }</code>
+
+
+#### OpenWebViewOptionsWithUrl
+
+<code><a href="#openwebviewbaseoptions">OpenWebViewBaseOptions</a> & { /** * Target URL to load. * @since 0.1.0 */ url: string; }</code>
 
 
 #### UrlChangeListener

@@ -54,16 +54,11 @@ export interface DisclaimerOptions {
     confirmBtn: string;
     cancelBtn: string;
 }
-export interface OpenWebViewOptions {
-    /**
-     * Target URL to load.
-     * @since 0.1.0
-     */
-    url: string;
+interface OpenWebViewBaseOptions {
     /**
      * Headers to send with the request.
      * @since 0.1.0
-     */
+    */
     headers?: Headers;
     /**
      * share options
@@ -164,6 +159,20 @@ export interface OpenWebViewOptions {
      */
     showArrow?: boolean;
 }
+export type OpenWebViewOptionsWithUrl = OpenWebViewBaseOptions & {
+    /**
+     * Target URL to load.
+     * @since 0.1.0
+    */
+    url: string;
+};
+export type OpenWebViewOptionsWithHtmlString = OpenWebViewBaseOptions & {
+    /**
+     * HTML string to load as an alternative to `url`.
+     */
+    htmlString: string;
+};
+export type OpenWebViewOptions = OpenWebViewOptionsWithUrl | OpenWebViewOptionsWithHtmlString;
 export interface InAppBrowserPlugin {
     /**
      * Open url in a new window fullscreen
@@ -179,11 +188,16 @@ export interface InAppBrowserPlugin {
     clearCookies(): Promise<any>;
     close(): Promise<any>;
     /**
+     * Open webview with given html string.
+     * @param options WebView options
+     */
+    openWebViewWithHTML(options: OpenWebViewOptionsWithHtmlString): Promise<any>;
+    /**
      * Open url in a new webview with toolbars
      *
      * @since 0.1.0
      */
-    openWebView(options: OpenWebViewOptions): Promise<any>;
+    openWebView(options: OpenWebViewOptionsWithUrl): Promise<any>;
     setUrl(options: {
         url: string;
     }): Promise<any>;
@@ -192,19 +206,19 @@ export interface InAppBrowserPlugin {
      *
      * @since 0.0.1
      */
-    addListener(eventName: "urlChangeEvent", listenerFunc: UrlChangeListener): Promise<PluginListenerHandle> & PluginListenerHandle;
+    addListener(eventName: "urlChangeEvent", listenerFunc: UrlChangeListener): Promise<PluginListenerHandle>;
     /**
      * Listen for close click only for openWebView
      *
      * @since 0.4.0
      */
-    addListener(eventName: "closeEvent", listenerFunc: UrlChangeListener): Promise<PluginListenerHandle> & PluginListenerHandle;
+    addListener(eventName: "closeEvent", listenerFunc: UrlChangeListener): Promise<PluginListenerHandle>;
     /**
      * Will be triggered when user clicks on confirm button when disclaimer is required, works only on iOS
      *
      * @since 0.0.1
      */
-    addListener(eventName: "confirmBtnClicked", listenerFunc: ConfirmBtnListener): Promise<PluginListenerHandle> & PluginListenerHandle;
+    addListener(eventName: "confirmBtnClicked", listenerFunc: ConfirmBtnListener): Promise<PluginListenerHandle>;
     /**
      * Remove all listeners for this plugin.
      *
@@ -218,3 +232,4 @@ export interface InAppBrowserPlugin {
      */
     reload(): Promise<any>;
 }
+export {};
