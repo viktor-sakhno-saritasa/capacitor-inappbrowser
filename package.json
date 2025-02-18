@@ -13,14 +13,10 @@
     "ios/Plugin/",
     "SakhnovictInappbrowser.podspec"
   ],
-  "author": "Martin Donadieu",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cap-go/capacitor-inappbrowser.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Cap-go/capacitor-inappbrowser/issues"
+    "url": "git+https://github.com/viktor-sakhno-saritasa/capacitor-inappbrowser.git"
   },
   "keywords": [
     "capacitor",
@@ -37,8 +33,7 @@
     "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
     "verify:android": "cd android && ./gradlew clean build test && cd ..",
     "verify:web": "npm run build",
-    "docgen": "docgen --api InAppBrowserPlugin --output-readme README.md --output-json dist/docs.json",
-    "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
@@ -49,7 +44,6 @@
     "@capacitor/core": "^7.0.0",
     "@capacitor/docgen": "^0.3.0",
     "@capacitor/ios": "^7.0.0",
-    "husky": "^8.0.3",
     "rimraf": "^6.0.1",
     "rollup": "^4.30.1",
     "typescript": "^5.0.4"
