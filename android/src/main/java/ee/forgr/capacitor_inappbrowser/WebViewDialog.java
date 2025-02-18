@@ -143,57 +143,54 @@ public class WebViewDialog extends Dialog {
 
         View backButton = _toolbar.findViewById(R.id.backButton);
         backButton.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (_webView.canGoBack()) {
-                        _webView.goBack();
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (_webView.canGoBack()) {
+                            _webView.goBack();
+                        }
                     }
-                }
-            }
-        );
+                });
 
         View forwardButton = _toolbar.findViewById(R.id.forwardButton);
         forwardButton.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (_webView.canGoForward()) {
-                        _webView.goForward();
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (_webView.canGoForward()) {
+                            _webView.goForward();
+                        }
                     }
-                }
-            }
-        );
+                });
 
         View closeButton = _toolbar.findViewById(R.id.closeButton);
         closeButton.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // if closeModal true then display a native modal to check if the user is sure to close the browser
-                    if (_options.getCloseModal()) {
-                        new AlertDialog.Builder(_context)
-                            .setTitle(_options.getCloseModalTitle())
-                            .setMessage(_options.getCloseModalDescription())
-                            .setPositiveButton(
-                                _options.getCloseModalOk(),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Close button clicked, do something
-                                        dismiss();
-                                        _options.getCallbacks().closeEvent(_webView.getUrl(), false);
-                                    }
-                                }
-                            )
-                            .setNegativeButton(_options.getCloseModalCancel(), null)
-                            .show();
-                    } else {
-                        dismiss();
-                        _options.getCallbacks().closeEvent(_webView.getUrl(), false);
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // if closeModal true then display a native modal to check if the user is sure
+                        // to close the browser
+                        if (_options.getCloseModal()) {
+                            new AlertDialog.Builder(_context)
+                                    .setTitle(_options.getCloseModalTitle())
+                                    .setMessage(_options.getCloseModalDescription())
+                                    .setPositiveButton(
+                                            _options.getCloseModalOk(),
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // Close button clicked, do something
+                                                    dismiss();
+                                                    _options.getCallbacks().closeEvent(_webView.getUrl(), false);
+                                                }
+                                            })
+                                    .setNegativeButton(_options.getCloseModalCancel(), null)
+                                    .show();
+                        } else {
+                            dismiss();
+                            _options.getCallbacks().closeEvent(_webView.getUrl(), false);
+                        }
                     }
-                }
-            }
-        );
+                });
 
         if (_options.showArrow()) {
             closeButton.setBackgroundResource(R.drawable.arrow_forward_enabled);
@@ -203,21 +200,20 @@ public class WebViewDialog extends Dialog {
             View reloadButton = _toolbar.findViewById(R.id.reloadButton);
             reloadButton.setVisibility(View.VISIBLE);
             reloadButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        _webView.reload();
-                    }
-                }
-            );
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            _webView.reload();
+                        }
+                    });
         }
 
         if (TextUtils.equals(_options.getToolbarType(), "activity")) {
             _toolbar.findViewById(R.id.forwardButton).setVisibility(View.GONE);
             _toolbar.findViewById(R.id.backButton).setVisibility(View.GONE);
-            //TODO: Add share button functionality
+            // TODO: Add share button functionality
         } else if (TextUtils.equals(_options.getToolbarType(), "navigation")) {
-            //TODO: Remove share button when implemented
+            // TODO: Remove share button when implemented
         } else if (TextUtils.equals(_options.getToolbarType(), "blank")) {
             _toolbar.setVisibility(View.GONE);
         } else {
@@ -228,94 +224,90 @@ public class WebViewDialog extends Dialog {
 
     private void setWebViewClient() {
         _webView.setWebViewClient(
-            new WebViewClient() {
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                    if (request.isRedirect()) {
-                        _options.getCallbacks().urlChangeEvent(request.getUrl().toString());
+                new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                        if (request.isRedirect()) {
+                            _options.getCallbacks().urlChangeEvent(request.getUrl().toString());
+                        }
+                        String url = request.getUrl().toString();
+                        boolean isExternalUrl = !url.contains("secmsg.net/itasecure");
+                        if (url.startsWith("tel:")
+                                || url.startsWith("sms:")
+                                || url.startsWith("smsto:")
+                                || url.startsWith("mms:")
+                                || url.startsWith("mmsto:")
+                                || isExternalUrl) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            _context.startActivity(intent);
+                            return true;
+                        }
+                        return false;
                     }
-					String url = request.getUrl().toString();
-					boolean isExternalUrl = !url.contains("secmsg.net/itasecure");
-					if (
-							url.startsWith("tel:")
-							|| url.startsWith("sms:")
-							|| url.startsWith("smsto:")
-							|| url.startsWith("mms:")
-							|| url.startsWith("mmsto:")
-							|| isExternalUrl
-					)
-					{
-						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-						_context.startActivity(intent);
-						return true;
-					}
-                    return false;
-                }
 
-                @Override
-                public void onLoadResource(WebView view, String url) {
-                    super.onLoadResource(view, url);
-                }
-
-                @Override
-                public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                    super.onPageStarted(view, url, favicon);
-                    try {
-                        URI uri = new URI(url);
-                        setTitle(uri.getHost());
-                    } catch (URISyntaxException e) {
-                        // Do nothing
+                    @Override
+                    public void onLoadResource(WebView view, String url) {
+                        super.onLoadResource(view, url);
                     }
-                }
 
-                public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
-                    if (!isReload) {
-                        _options.getCallbacks().urlChangeEvent(url);
-                    }
-                    super.doUpdateVisitedHistory(view, url, isReload);
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    _options.getCallbacks().pageLoaded();
-                    if (!isInitialized) {
-                        isInitialized = true;
-                        _webView.clearHistory();
-                        if (_options.isPresentAfterPageLoad()) {
-                            show();
-                            _options.getPluginCall().resolve();
+                    @Override
+                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                        super.onPageStarted(view, url, favicon);
+                        try {
+                            URI uri = new URI(url);
+                            setTitle(uri.getHost());
+                        } catch (URISyntaxException e) {
+                            // Do nothing
                         }
                     }
 
-                    ImageButton backButton = _toolbar.findViewById(R.id.backButton);
-                    if (_webView.canGoBack()) {
-                        backButton.setImageResource(R.drawable.arrow_back_enabled);
-                        backButton.setEnabled(true);
-                    } else {
-                        backButton.setImageResource(R.drawable.arrow_back_disabled);
-                        backButton.setEnabled(false);
+                    public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+                        if (!isReload) {
+                            _options.getCallbacks().urlChangeEvent(url);
+                        }
+                        super.doUpdateVisitedHistory(view, url, isReload);
                     }
 
-                    ImageButton forwardButton = _toolbar.findViewById(R.id.forwardButton);
-                    if (_webView.canGoForward()) {
-                        forwardButton.setImageResource(R.drawable.arrow_forward_enabled);
-                        forwardButton.setEnabled(true);
-                    } else {
-                        forwardButton.setImageResource(R.drawable.arrow_forward_disabled);
-                        forwardButton.setEnabled(false);
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        super.onPageFinished(view, url);
+                        _options.getCallbacks().pageLoaded();
+                        if (!isInitialized) {
+                            isInitialized = true;
+                            _webView.clearHistory();
+                            if (_options.isPresentAfterPageLoad()) {
+                                show();
+                                _options.getPluginCall().resolve();
+                            }
+                        }
+
+                        ImageButton backButton = _toolbar.findViewById(R.id.backButton);
+                        if (_webView.canGoBack()) {
+                            backButton.setImageResource(R.drawable.arrow_back_enabled);
+                            backButton.setEnabled(true);
+                        } else {
+                            backButton.setImageResource(R.drawable.arrow_back_disabled);
+                            backButton.setEnabled(false);
+                        }
+
+                        ImageButton forwardButton = _toolbar.findViewById(R.id.forwardButton);
+                        if (_webView.canGoForward()) {
+                            forwardButton.setImageResource(R.drawable.arrow_forward_enabled);
+                            forwardButton.setEnabled(true);
+                        } else {
+                            forwardButton.setImageResource(R.drawable.arrow_forward_disabled);
+                            forwardButton.setEnabled(false);
+                        }
+
+                        _options.getCallbacks().pageLoaded();
                     }
 
-                    _options.getCallbacks().pageLoaded();
-                }
-
-                @Override
-                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                    super.onReceivedError(view, request, error);
-                    _options.getCallbacks().pageLoadError();
-                }
-            }
-        );
+                    @Override
+                    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                        super.onReceivedError(view, request, error);
+                        _options.getCallbacks().pageLoadError();
+                    }
+                });
     }
 
     @Override
@@ -325,20 +317,19 @@ public class WebViewDialog extends Dialog {
         } else {
             if (_options.getCloseModal()) {
                 new AlertDialog.Builder(_context)
-                    .setTitle(_options.getCloseModalTitle())
-                    .setMessage(_options.getCloseModalDescription())
-                    .setPositiveButton(
-                        _options.getCloseModalOk(),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Close button clicked, do something
-                                dismiss();
-                                _options.getCallbacks().closeEvent(_webView.getUrl(), true);
-                            }
-                        }
-                    )
-                    .setNegativeButton(_options.getCloseModalCancel(), null)
-                    .show();
+                        .setTitle(_options.getCloseModalTitle())
+                        .setMessage(_options.getCloseModalDescription())
+                        .setPositiveButton(
+                                _options.getCloseModalOk(),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Close button clicked, do something
+                                        dismiss();
+                                        _options.getCallbacks().closeEvent(_webView.getUrl(), true);
+                                    }
+                                })
+                        .setNegativeButton(_options.getCloseModalCancel(), null)
+                        .show();
             } else {
                 dismiss();
                 _options.getCallbacks().closeEvent(_webView.getUrl(), true);
