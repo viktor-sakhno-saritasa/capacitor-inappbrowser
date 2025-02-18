@@ -142,7 +142,7 @@
           "PluginListenerHandle",
           "UrlChangeListener"
         ],
-        "slug": "addlistenerurlchangeevent"
+        "slug": "addlistenerurlchangeevent-"
       },
       {
         "name": "addListener",
@@ -171,7 +171,7 @@
           "PluginListenerHandle",
           "UrlChangeListener"
         ],
-        "slug": "addlistenercloseevent"
+        "slug": "addlistenercloseevent-"
       },
       {
         "name": "addListener",
@@ -200,7 +200,7 @@
           "PluginListenerHandle",
           "ConfirmBtnListener"
         ],
-        "slug": "addlistenerconfirmbtnclicked"
+        "slug": "addlistenerconfirmbtnclicked-"
       },
       {
         "name": "removeAllListeners",
