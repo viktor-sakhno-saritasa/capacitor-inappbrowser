@@ -1,11 +1,12 @@
 {
   "name": "@sakhnovict/inappbrowser",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Capacitor In-App Browser plugin for the Pager project",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "unpkg": "dist/plugin.js",
+  "author": "Saritasa",
   "files": [
     "android/src/main/",
     "android/build.gradle",
